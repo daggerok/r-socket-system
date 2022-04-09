@@ -23,6 +23,7 @@ http --ignore-stdin  get :8002
 ![This is an image how to connect to local h2 db file](./docs/h2-idea-how2.png)
 
 ## RTFM
+* [Render classpath resource](https://www.baeldung.com/spring-classpath-file-access)
 + [Fix R2DBC default values](https://github.com/spring-projects/spring-data-examples/blob/main/r2dbc/example/src/main/java/example/springdata/r2dbc/entitycallback/ApplicationConfiguration.java)
 * [JDK Version Range](https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-Versions#jdk-version-range) on the wiki
 * [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)

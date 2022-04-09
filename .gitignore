@@ -1,3 +1,8 @@
+**/src/main/resources/static/**
+**/node_modules/**
+**/.parcel-cache/**
+**/js-vite/**
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

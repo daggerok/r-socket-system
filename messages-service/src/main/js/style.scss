@@ -1,0 +1,19 @@
+@import 'https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en';
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+
+body {
+  margin: 0;
+  padding: 0;
+  // text-transform: uppercase;
+  font-family: Roboto, Avenir, Helvetica, Arial, sans-serif;
+
+  #app {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+  }
+}

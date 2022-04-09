@@ -19,7 +19,10 @@ spring:
       AUTO_SERVER: TRUE
   rsocket:
     server:
-      port: 7002
+      transport: websocket
+      mapping-path: /r-socket
+  thymeleaf:
+    cache: off
 server:
   port: 8002
 logging:
