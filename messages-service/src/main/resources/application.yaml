@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: messages-service
+  output:
+    ansi:
+      enabled: always
+  main:
+    web-application-type: reactive
+    lazy-initialization: off
+  r2dbc:
+    url: r2dbc:h2:file:///./target/${spring.application.name}
+    username: ${spring.application.name}
+    password: ${spring.application.name}
+    properties:
+      DB_CLOSE_ON_EXIT: FALSE
+      DB_CLOSE_DELAY: -1
+      MODE: PostgreSQL
+      DATABASE_TO_LOWER: TRUE
+      AUTO_SERVER: TRUE
+  rsocket:
+    server:
+      port: 7002
+server:
+  port: 8002
+logging:
+  level:
+    sql: trace
+    #web: trace
+    #io.r2dbc: trace
+    #org.springframework.data: trace
+    org.springframework.r2dbc: trace
+    name.nkonev.r2dbc.migrate: trace
+r2dbc:
+  migrate:
+    resources-paths:
+      - classpath*:db/migration/V202204061__ddl.sql
+      - classpath*:db/migration/V202204062__ddl.sql
