@@ -1,6 +1,6 @@
 **/src/main/resources/static/**
-**/node_modules/**
 **/.parcel-cache/**
+**/node_modules/**
 **/js-vite/**
 
 target/

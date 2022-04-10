@@ -37,4 +37,4 @@ r2dbc:
   migrate:
     resources-paths:
       - classpath*:db/migration/V202204061__ddl.sql
-      - classpath*:db/migration/V202204062__ddl.sql
+      - classpath*:db/migration/V202204062__dml.sql

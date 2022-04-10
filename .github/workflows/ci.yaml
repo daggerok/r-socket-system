@@ -30,14 +30,12 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: ${{ env.JAVA_VERSION }}
+      - run: sudo apt install httpie -yqq
       - run: sudo rm -rf ~/.m2/repository/daggerok
       - run: cd $GITHUB_WORKSPACE ; ./mvnw clean ; ./mvnw
       - run: cd $GITHUB_WORKSPACE ; ./mvnw -f users-service spring-boot:start
       - run: cd $GITHUB_WORKSPACE ; ./mvnw -f messages-service spring-boot:start
-      - run: sudo apt install httpie -yqq
-      - run: http --ignore-stdin post :8001 name=max
       - run: http --ignore-stdin  get :8001
-      - run: http --ignore-stdin post :8002 body='how r u?'
       - run: http --ignore-stdin  get :8002
       - run: cd $GITHUB_WORKSPACE ; ./mvnw -f users-service spring-boot:stop
       - run: cd $GITHUB_WORKSPACE ; ./mvnw -f messages-service spring-boot:stop

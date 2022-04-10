@@ -20,6 +20,8 @@
         <java.version>17</java.version>
         <kotlin.version>1.6.10</kotlin.version>
         <log4j-api-kotlin.version>1.1.0</log4j-api-kotlin.version>
+        <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
+        <frontend-maven-plugin.nodeVersion>v17.8.0</frontend-maven-plugin.nodeVersion>
         <r2dbc-migrate-spring-boot-starter.version>1.8.5</r2dbc-migrate-spring-boot-starter.version>
         <spring-boot-configuration-processor.version>2.6.6</spring-boot-configuration-processor.version>
     </properties>
@@ -81,6 +83,132 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>build-info</goal>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <version>${frontend-maven-plugin.version}</version>
+                    <configuration>
+                        <!--suppress UnresolvedMavenProperty -->
+                        <installDirectory>${maven.multiModuleProjectDirectory}/target</installDirectory>
+                        <workingDirectory>${project.basedir}/src/main/js</workingDirectory>
+                        <nodeVersion>${frontend-maven-plugin.nodeVersion}</nodeVersion>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>install node and npm</id>
+                            <goals>
+                                <goal>install-node-and-npm</goal>
+                            </goals>
+                            <phase>generate-resources</phase>
+                        </execution>
+                        <execution>
+                            <id>npm-install</id>
+                            <goals>
+                                <goal>npm</goal>
+                            </goals>
+                            <configuration>
+                                <arguments>i -E</arguments>
+                            </configuration>
+                            <phase>generate-resources</phase>
+                        </execution>
+                        <execution>
+                            <id>npm-run-build</id>
+                            <goals>
+                                <goal>npm</goal>
+                            </goals>
+                            <configuration>
+                                <arguments>run build</arguments>
+                            </configuration>
+                            <phase>generate-resources</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <configuration>
+                        <filesets>
+                            <fileset>
+                                <directory>${project.basedir}</directory>
+                                <useDefaultExcludes>true</useDefaultExcludes>
+                                <followSymlinks>false</followSymlinks>
+                                <includes>
+                                    <include>**/src/main/resources/static/**</include>
+                                    <include>**/src/main/js/.parcel-cache/**</include>
+                                    <include>**/src/main/js/node_modules/**</include>
+                                    <include>**/target/**</include>
+                                </includes>
+                            </fileset>
+                        </filesets>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <version>${frontend-maven-plugin.version}</version>
+                    <configuration>
+                        <nodeVersion>${frontend-maven-plugin.nodeVersion}</nodeVersion>
+                        <workingDirectory>${project.basedir}/src/main/js</workingDirectory>
+                        <installDirectory>${project.build.directory}</installDirectory>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>install node and npm</id>
+                            <goals>
+                                <goal>install-node-and-npm</goal>
+                            </goals>
+                            <phase>generate-resources</phase>
+                        </execution>
+                        <execution>
+                            <id>npm-install</id>
+                            <goals>
+                                <goal>npm</goal>
+                            </goals>
+                            <configuration>
+                                <arguments>i -E</arguments>
+                            </configuration>
+                            <phase>generate-resources</phase>
+                        </execution>
+                        <execution>
+                            <id>npm-run-build</id>
+                            <goals>
+                                <goal>npm</goal>
+                            </goals>
+                            <configuration>
+                                <arguments>run build</arguments>
+                            </configuration>
+                            <phase>generate-resources</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <configuration>
+                        <filesets>
+                            <fileset>
+                                <!--suppress UnresolvedMavenProperty -->
+                                <directory>${maven.multiModuleProjectDirectory}</directory>
+                                <useDefaultExcludes>true</useDefaultExcludes>
+                                <followSymlinks>false</followSymlinks>
+                                <includes>
+                                    <include>**/src/main/resources/static/**</include>
+                                    <include>**/src/main/js/.parcel-cache/**</include>
+                                    <include>**/src/main/js/node_modules/**</include>
+                                    <include>**/target/**</include>
+                                </includes>
+                            </fileset>
+                        </filesets>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

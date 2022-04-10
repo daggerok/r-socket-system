@@ -1,22 +1,6 @@
-import './style.scss'
-import WebFont from 'webfontloader';
-
-WebFont.load({
-  google: {
-    families: [
-      'Roboto:300,400,500,600,700',
-    ],
-  },
-});
-
-WebFont.load({
-  google: {
-    families: [
-      'Roboto:300,400,500,600,700',
-    ],
-  },
-  timeout: 2000,
-});
+const { RSocketClient, JsonSerializer, IdentitySerializer } = require('rsocket-core');
+const RSocketWebSocketClient = require('rsocket-websocket-client').default;
+let client = undefined;
 
 document.querySelector('#app').innerHTML = `
   <h1>Hello Parcel!</h1>
@@ -25,10 +9,6 @@ document.querySelector('#app').innerHTML = `
     <li></li>
   </div>
 `
-
-const { RSocketClient, JsonSerializer, IdentitySerializer } = require('rsocket-core');
-const RSocketWebSocketClient = require('rsocket-websocket-client').default;
-let client = undefined;
 
 document.addEventListener('DOMContentLoaded', main);
 
@@ -95,7 +75,7 @@ function main() {
 }
 
 function ul() {
-  return document.getElementById('r-socket');
+  return document.getElementById('r-socket-app');
 }
 
 function reloadMessages(message) {

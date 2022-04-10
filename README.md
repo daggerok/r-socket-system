@@ -9,10 +9,11 @@ Status: IN DEVELOPMENT
 ./mvnw -f users-service spring-boot:start
 ./mvnw -f messages-service spring-boot:start
 
-http --ignore-stdin post :8001 name=max
 http --ignore-stdin  get :8001
-http --ignore-stdin post :8002 body='how r u?'
 http --ignore-stdin  get :8002
+
+open http://127.0.0.:8002
+open http://127.0.0.:8001
 
 ./mvnw -f users-service spring-boot:stop
 ./mvnw -f messages-service spring-boot:stop

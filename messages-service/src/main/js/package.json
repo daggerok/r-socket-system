@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
+    "dev": "npm start",
     "start": "parcel index.html",
     "build": "parcel build index.html --no-cache --dist-dir ../resources/static"
   },
@@ -22,6 +23,7 @@
     "ws": "8.5.0"
   },
   "devDependencies": {
+    "@parcel/transformer-css": "2.4.1",
     "@parcel/transformer-sass": "2.4.1",
     "@types/node": "17.0.23",
     "buffer": "6.0.3",

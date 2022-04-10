@@ -1,5 +1,6 @@
 package daggerok
 
+import io.rsocket.internal.UnboundedProcessor
 import java.time.Duration
 import java.time.Instant
 import java.util.Locale
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.core.io.ClassPathResource
 import org.springframework.core.io.Resource
 import org.springframework.core.io.ResourceLoader
@@ -96,14 +98,25 @@ data class Message(
 
 interface MessageRepository : R2dbcRepository<Message, Long>
 
+@Configuration
+class UnboundedProcessorConfig {
+
+    @Bean
+    fun helloMessagesStream(messageRepository: MessageRepository): Flux<Map<String, Message>> =
+        Flux.interval(Duration.ofSeconds(3))
+            .map { "Hello $it at ${Instant.now()}" }
+            .map { Message(body = it) }
+            .flatMap(messageRepository::save)
+            .map { mapOf("result" to it) }
+            .share()
+}
+
 @Controller
-class RSocketResource {
+class RSocketResource(private val helloMessagesStream: Flux<Map<String, Message>>) {
 
     @MessageMapping("hello")
-    fun hello() = Flux.interval(Duration.ofSeconds(1))
-        .map { "Hello $it at ${Instant.now()}" }
-        .map { mapOf("result" to it) }
-        .doOnNext(log::info)
+    fun hello() =
+        helloMessagesStream.doOnNext(log::info)
 
     private companion object { val log = logger() }
 }
